@@ -1,4 +1,5 @@
-import networkx as nx
+import networkx as nx 
+from .cycles import count_cycles, has_hamiltonian_cycle
 
 def analyze_graph(G):
     """
@@ -16,7 +17,11 @@ def analyze_graph(G):
 
     degrees = dict(G.degree())
 
-    return is_connected, degrees
+    cycle_count = count_cycles(G)
+
+    has_hamiltonian, hamiltonian_cycle = has_hamiltonian_cycle(G)
+
+    return is_connected, degrees, cycle_count, has_hamiltonian, hamiltonian_cycle
 
 def calculate_degree_statistics(degrees):
     """

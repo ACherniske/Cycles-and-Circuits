@@ -1,5 +1,6 @@
 import networkx as nx
 from .generator import generate_random_graph
+from .cycles import has_hamiltonian_cycle
 
 def check_graph_conditons(G, conditions):
     """
@@ -29,7 +30,12 @@ def check_graph_conditons(G, conditions):
         for node, degree in degrees.items():
             if degree == 0:
                 return False, f"Node {node} has no edges."
-            
+
+    if conditions.get('must_have_hamiltonian', False):
+        has_cycle, _ = has_hamiltonian_cycle(G)
+        if not has_cycle:
+            return False, "Graph does not have a Hamiltonian cycle" 
+
     return True, "all conditions met"
 
 def generate_graph_with_conditions(num_nodes, edge_probability, conditions,max_attempts=999):

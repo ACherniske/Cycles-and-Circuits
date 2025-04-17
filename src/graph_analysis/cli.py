@@ -1,7 +1,7 @@
 import argparse
 from .generator import generate_random_graph
 from .analyzer import analyze_graph
-from .visualizer import visualize_graph
+from .visualizer import visualize_graph, print_graph_info
 from .conditions import generate_graph_with_conditions
 
 def get_user_input():
@@ -45,7 +45,7 @@ def get_user_input():
     conditions['must_be_connected'] = input("Must be connected? (y/n): ").strip().lower() == 'y'
     conditions['all_verticies_even_degree'] = input("All vertices even degree? (y/n): ").strip().lower() == 'y'
     conditions['must_be_closed'] = input("Must be closed? (y/n): ").strip().lower() == 'y'
-
+    conditions['must_have_hamiltonian'] = input("Must have Hamiltonian cycle? (y/n): ").strip().lower() == 'y'
     return num_nodes, edge_probability, conditions
 
 def main():
@@ -69,9 +69,11 @@ def main():
     
     print(f"Graph generated in {attempts} attempts.")
 
-    is_connected, degrees = analyze_graph(G)
+    is_connected, degrees, cycle_count, has_hamiltonian, hamiltonian_cycle = analyze_graph(G)
 
-    visualize_graph(G, is_connected, degrees)
+    visualize_graph(G, is_connected, degrees, hamiltonian_cycle,)
+
+    print_graph_info(is_connected, degrees, cycle_count, has_hamiltonian, hamiltonian_cycle)
 
     print("\nConditions Met:")
     for condition, is_set in conditions.items():

@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
 import networkx as nx
 
-def visualize_graph(G, is_connected, degrees, output_path=None):
+def visualize_graph(G, is_connected, degrees, hamiltonian_cycle=None, output_path=None):
     """
     Visualize the graph and display connectivity and degree information
 
@@ -20,10 +20,15 @@ def visualize_graph(G, is_connected, degrees, output_path=None):
 
     nx.draw(G, pos, with_labels=True, node_color='lightblue', node_size=500, edge_color='gray', width=1, alpha=0.7)
 
-    if is_connected:
-        plt.title("Connected Graph", fontsize=16)
-    else:
-        plt.title("Disconnected Graph", fontsize=16)
+    if hamiltonian_cycle:
+        hamiltonian_edges = list(zip(hamiltonian_cycle, hamiltonian_cycle[1:] + [hamiltonian_cycle[0]]))
+        nx.draw_networkx_edges(G, pos, edgelist=hamiltonian_edges, 
+                              width=2.5, edge_color='red', alpha=0.8)
+
+    title = "Connected Graph" if is_connected else "Disconnected Graph"
+    if hamiltonian_cycle:
+        title += " (Has Hamiltonian Cycle)"
+    plt.title(title, fontsize=16)
 
     plt.tight_layout()
 
@@ -33,7 +38,7 @@ def visualize_graph(G, is_connected, degrees, output_path=None):
     else:
         plt.show()
 
-def print_degree_info(is_connected, degrees):
+def print_graph_info(is_connected, degrees, cycle_count, has_hamiltonian, hamiltonian_cycle=None):
     """
     Print the degree information of the graph
 
@@ -45,9 +50,19 @@ def print_degree_info(is_connected, degrees):
         None
     """
     print(f"Graph is {'connected' if is_connected else 'disconnected'}")
+    print(f"Total number of cycles: {cycle_count}")
+    print(f"Has Hamiltonian cycle: {'Yes' if has_hamiltonian else 'No'}")
+    
+    if hamiltonian_cycle:
+        cycle_str = " → ".join(str(v) for v in hamiltonian_cycle)
+        print(f"Hamiltonian cycle: {cycle_str} → {hamiltonian_cycle[0]}")
+
+    """
+    # commented out for cleaner output
     print("\nVertex Degrees:")
     for node, degree in sorted(degrees.items()):
         print(f"Node {node}: Degree {degree}")
+    """
 
     min_degree = min(degrees.values())
     max_degree = max(degrees.values())
