@@ -1,4 +1,4 @@
-import newtorkx as nx
+import networkx as nx
 
 def analyze_graph(G):
     """
