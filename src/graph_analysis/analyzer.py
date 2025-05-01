@@ -1,5 +1,6 @@
 import networkx as nx 
 from .cycles import count_cycles, has_hamiltonian_cycle
+from .circuits import count_circuits, has_eulerian_circuit
 
 def analyze_graph(G):
     """
@@ -19,9 +20,13 @@ def analyze_graph(G):
 
     cycle_count = count_cycles(G)
 
+    circuit_count = count_circuits(G)
+
     has_hamiltonian, hamiltonian_cycle = has_hamiltonian_cycle(G)
 
-    return is_connected, degrees, cycle_count, has_hamiltonian, hamiltonian_cycle
+    has_eulerian, eulerian_circuit = has_eulerian_circuit(G)
+
+    return is_connected, degrees, cycle_count, circuit_count, has_hamiltonian, hamiltonian_cycle, has_eulerian, eulerian_circuit
 
 def calculate_degree_statistics(degrees):
     """

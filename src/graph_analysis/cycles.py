@@ -18,7 +18,7 @@ def count_cycles(G):
     Count the number of cycles in a graph.
 
     Args:
-        G (object): A NetworkX graph object
+        G (object): A NetworkX graph objectw
 
     Returns:
         int: The number of cycles in the graph.

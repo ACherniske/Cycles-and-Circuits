@@ -69,11 +69,11 @@ def main():
     
     print(f"Graph generated in {attempts} attempts.")
 
-    is_connected, degrees, cycle_count, has_hamiltonian, hamiltonian_cycle = analyze_graph(G)
+    is_connected, degrees, cycle_count, circuit_count, has_hamiltonian, hamiltonian_cycle, has_eulerian, eulerian_circuit= analyze_graph(G)
 
-    visualize_graph(G, is_connected, degrees, hamiltonian_cycle,)
+    visualize_graph(G, is_connected, degrees, hamiltonian_cycle, eulerian_circuit)
 
-    print_graph_info(is_connected, degrees, cycle_count, has_hamiltonian, hamiltonian_cycle)
+    print_graph_info(is_connected, degrees, cycle_count, circuit_count, has_hamiltonian, has_eulerian, hamiltonian_cycle, eulerian_circuit)
 
     print("\nConditions Met:")
     for condition, is_set in conditions.items():

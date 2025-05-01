@@ -38,7 +38,7 @@ def check_graph_conditons(G, conditions):
 
     return True, "all conditions met"
 
-def generate_graph_with_conditions(num_nodes, edge_probability, conditions,max_attempts=999):
+def generate_graph_with_conditions(num_nodes, edge_probability, conditions,max_attempts=9999):
     """_summary_
 
     Args:
